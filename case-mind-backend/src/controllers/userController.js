@@ -42,6 +42,16 @@ router.put('/:userId', async (req, res) => {
   try {
     const newData = req.body
 
+    if (req.userId !== req.params.userId) {
+      const admin = await User.findById(req.userId)
+
+      if (admin.level !== 999)
+        return res.status(HttpStatus.UNAUTHORIZED).send({
+          error:
+            'Erro: Somente administradores podem atualizar outros usuários',
+        })
+    }
+
     if (newData.password)
       newData.password = bcrypt.hashSync(req.body.password, 10)
 
@@ -68,12 +78,9 @@ router.delete('/:userId', async (req, res) => {
       const admin = await User.findById(req.userId)
 
       if (admin.level !== 999)
-        return res
-          .status(HttpStatus.UNAUTHORIZED)
-          .send({
-            error:
-              'Erro: Somente administradores podem excluir outros usuários',
-          })
+        return res.status(HttpStatus.UNAUTHORIZED).send({
+          error: 'Erro: Somente administradores podem excluir outros usuários',
+        })
     }
 
     await User.findByIdAndDelete(req.params.userId)
