@@ -62,4 +62,27 @@ router.put('/:userId', async (req, res) => {
   }
 })
 
+router.delete('/:userId', async (req, res) => {
+  try {
+    if (req.userId !== req.params.userId) {
+      const admin = await User.findById(req.userId)
+
+      if (admin.level !== 999)
+        return res
+          .status(HttpStatus.UNAUTHORIZED)
+          .send({
+            error:
+              'Erro: Somente administradores podem excluir outros usuários',
+          })
+    }
+
+    await User.findByIdAndDelete(req.params.userId)
+    return res.send()
+  } catch (err) {
+    return res
+      .status(HttpStatus.BAD_REQUEST)
+      .send({ error: 'Erro: Não foi possível deletar o usuário' })
+  }
+})
+
 module.exports = (app) => app.use('/application', router)
