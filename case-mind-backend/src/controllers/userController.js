@@ -25,4 +25,16 @@ router.get('/users', async (req, res) => {
   }
 })
 
+router.get('/:userId', async function (req, res) {
+  try {
+    const user = await User.findById(req.params.userId)
+
+    return res.send({ user })
+  } catch (err) {
+    return res
+      .status(HttpStatus.BAD_REQUEST)
+      .send({ error: 'Erro: Não foi possível mostrar o usuário' })
+  }
+})
+
 module.exports = (app) => app.use('/application', router)
