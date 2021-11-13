@@ -24,7 +24,7 @@ module.exports = function (req, res, next) {
       .status(HttpStatus.UNAUTHORIZED)
       .send({ error: 'Erro: Token mal formatado' })
 
-  jwt.verify(token, auth.keySecret, function (err, decodedUser) {
+  jwt.verify(token, auth.secret, function (err, decodedUser) {
     if (err)
       return res
         .status(HttpStatus.UNAUTHORIZED)
