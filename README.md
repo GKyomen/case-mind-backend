@@ -2,7 +2,7 @@
 
 API de backend desenvolvida por [Gabriel Kyomen](https://github.com/GKyomen) em novembro de 2021 para o case do processo seletivo da [Mind Consulting](https://mindconsulting.com.br/)
 
-Visite o Backend [clicando aqui](https://github.com/GKyomen/case-mind-backend).
+Visite o Frontend [clicando aqui](https://github.com/GKyomen/case-mind-frontend).
 
 ## Requisitos
 * NodeJs
