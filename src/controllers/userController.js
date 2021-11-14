@@ -42,8 +42,8 @@ router.put('/:userId', async (req, res) => {
   try {
     const newData = req.body
 
-    if (req.userId !== req.params.userId) {
-      const admin = await User.findById(req.userId)
+    if (newData._id !== req.params.userId) {
+      const admin = await User.findById(newData._id)
 
       if (admin.level !== 999)
         return res.status(HttpStatus.UNAUTHORIZED).send({
@@ -55,13 +55,9 @@ router.put('/:userId', async (req, res) => {
     if (newData.password)
       newData.password = bcrypt.hashSync(req.body.password, 10)
 
-    const userUpdated = await User.findByIdAndUpdate(
-      req.params.userId,
-      newData,
-      {
-        new: true,
-      }
-    )
+    const userUpdated = await User.findByIdAndUpdate(newData._id, newData, {
+      new: true,
+    })
 
     await userUpdated.save()
     return res.send({ userUpdated })
@@ -74,8 +70,8 @@ router.put('/:userId', async (req, res) => {
 
 router.delete('/:userId', async (req, res) => {
   try {
-    if (req.userId !== req.params.userId) {
-      const admin = await User.findById(req.userId)
+    if (req.body.userId !== req.params.userId) {
+      const admin = await User.findById(req.body.userId)
 
       if (admin.level !== 999)
         return res.status(HttpStatus.UNAUTHORIZED).send({
