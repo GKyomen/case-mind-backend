@@ -16,7 +16,7 @@ router.get('/users', async (req, res) => {
         error: 'Erro: Somente administradores podem ver todos os usuários',
       })
 
-    const users = await User.find()
+    const users = await User.find().where('_id').ne(req.userId)
 
     return res.send({ users })
   } catch (error) {
@@ -68,7 +68,7 @@ router.put('/:userId', async (req, res) => {
   } catch (err) {
     return res
       .status(HttpStatus.BAD_REQUEST)
-      .send({ error: 'Erro: Não foi possível atualizar o usuário' })
+      .send({ error: 'Erro: Não foi possível atualizar o usuário', err })
   }
 })
 

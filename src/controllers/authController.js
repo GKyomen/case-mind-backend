@@ -32,6 +32,7 @@ router.post('/register', async (req, res) => {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
       level: req.body.level,
+      originalLevel: req.body.level,
     })
 
     await newUser.save()

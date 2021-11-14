@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema({
   level: {
     type: Number,
   },
+  originalLevel: {
+    type: Number,
+  },
 })
 
 const User = mongoose.model('User', UserSchema)
